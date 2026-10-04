@@ -1,0 +1,44 @@
+<div class="container">
+  <form [formGroup]="billingForm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="billingDate" class="form-label">Date</label>
+          <input type="email" class="form-control" id="billingDate" formControlName="billingDate">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="customerName" class="form-label">Client</label>
+          <input type="email" class="form-control" id="customerName" formControlName="customerName">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h5>Articles</h5>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Produit</th><th>Quantité</th><th>Prix</th><th>Remise %</th>
+        </tr>
+        </thead>
+
+        <tbody formArrayName="productItems">
+          @for (item of productItems.controls; track $index; let i = $index) {
+            <tr [formGroupName]="i">
+              <td><input class="form-control" formControlName="productName"></td>
+              <td><input class="form-control" type="number" formControlName="quantity"></td>
+              <td><input class="form-control" type="number" formControlName="price"></td>
+              <td><input class="form-control" type="number" formControlName="discount"></td>
+
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <p class="fw-bold">Total : {{ totalAmount | number:'1.2-2' }} DH</p>
+
+  </form>
+</div>

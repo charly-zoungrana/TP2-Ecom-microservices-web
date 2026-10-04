@@ -1,0 +1,58 @@
+<div class="container">
+  <p-table [value]="bills()" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template #header>
+      <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Client</th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-bill>
+      <tr>
+        <td>{{ bill.id }}</td>
+        <td>{{ bill.billingDate }}</td>
+        <td>{{ bill.customer.name }}</td>
+        <td>
+          <button class="btn btn-outline-info"
+                  data-bs-toggle="modal"
+                  data-bs-target="#billModal"
+                  (click)="getBillDetails(bill.id)"
+          >
+            Détails
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+<!-- modal -->
+<div class="modal fade" id="billModal" tabindex="-1" aria-labelledby="billModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="billModalLabel">Détail de la facture</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+
+      <div class="modal-body">
+        @if (billDetail(); as bill) {
+          <app-bill-details [bill]="bill" />
+        } @else {
+          <div class="text-center p-4">
+            <div class="spinner-border" role="status"></div>
+            <p class="mt-2">Chargement…</p>
+          </div>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+
+    </div>
+  </div>
+</div>
